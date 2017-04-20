@@ -1,0 +1,21 @@
+<% param_prefix = "payment_source[#{payment_method.id}]" %>
+
+<div class="klarna_credit_box" data-order-id="<%= @order.number %>" data-payment-method-id="<%= payment_method.id %>">
+  <div class="header">
+    <div class="logo">
+      <img src="https://cdn.klarna.com/1.0/shared/image/generic/logo/en_us/basic/white.png?width=80" width="80px">
+    </div>
+  </div>
+
+  <%= hidden_field_tag "#{param_prefix}[authorization_token]", "", {id: "klarna_authorization_token"} %>
+  <div id="klarna_container"></div>
+  <div class="klarna_error flash error"><%= Spree.t('klarna_general_error') %></div>
+</div>
+
+<script type="text/javascript" id="klarna-credit-lib-x">
+/* <![CDATA[ */
+KlarnaGateway.loadSdk(this, document, function() {
+  jQuery(".klarna_credit_box").klarnaAuthorize();
+});
+ /* ]]> */
+</script>
