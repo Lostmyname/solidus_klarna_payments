@@ -1,6 +1,32 @@
-RSpec:
-  script:
+before_script:
   - rvm use 2.3
-  - ruby -v
-  - bundle install
-  - bundle exec rake
+
+solidus1_3:
+  stage: test
+  script:
+    - bundle install
+    - bundle exec rake
+
+solidus1_4:
+  stage: test
+  variables:
+    SOLIDUS_VERSION: "~> 1.4.0"
+  script:
+    - bundle install
+    - bundle exec rake
+
+solidus2_0:
+  stage: test
+  variables:
+    SOLIDUS_VERSION: "~> 2.0.0"
+  script:
+    - bundle install
+    - bundle exec rake
+
+solidus2_1:
+  stage: test
+  variables:
+    SOLIDUS_VERSION: "~> 2.1.0"
+  script:
+    - bundle install
+    - bundle exec rake

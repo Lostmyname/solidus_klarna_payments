@@ -29,13 +29,15 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rspec-rails", "~> 3.5.0"
+  spec.add_development_dependency "capybara"
+  spec.add_development_dependency "poltergeist", "~> 1.15.0"
+  spec.add_development_dependency "site_prism"
   spec.add_development_dependency "vcr", "~> 3.0"
   spec.add_development_dependency "webmock", "~> 2.0"
   spec.add_development_dependency "pry-rails"
   spec.add_development_dependency "pry-byebug"
   spec.add_development_dependency "factory_girl", "~> 4"
   spec.add_development_dependency "sqlite3"
-  spec.add_development_dependency "httplog"
   spec.add_development_dependency "database_cleaner"
   spec.add_development_dependency "pg"
 
@@ -43,7 +45,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
 
   spec.add_dependency "solidus_core", ">= 1.3.0.a", "< 3"
+  spec.add_dependency "solidus_api", ">= 1.3.0.a", "< 3"
   spec.add_dependency "solidus_frontend", ">= 1.3.0.a", "< 3"
   spec.add_dependency "solidus_backend", ">= 1.3.0.a", "< 3"
+  spec.add_dependency "klarna_client", ">= 0.9.1"
   spec.add_dependency "activemerchant"
 end
