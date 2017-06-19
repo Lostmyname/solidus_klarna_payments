@@ -108,7 +108,7 @@ module KlarnaGateway
         # address_update: "string",
         # country_change: "string",
         confirmation: confirmation_url,
-        notification: url_helpers.klarna_notification_url(host: store_url)
+        notification: notification_url
       } if store.present?
     end
 
@@ -117,7 +117,16 @@ module KlarnaGateway
       case configured_url
       when String then configured_url
       when Proc then configured_url.call(store, @order)
-      else url_helpers.order_url(@order.number, host: store_url)
+      else raise 'You need to set up configured_url'
+      end
+    end
+
+    def notification_url
+      notification_url = KlarnaGateway.configuration.notification_url
+      case notification_url
+      when String then notification_url
+      when Proc then notification_url.call(store)
+      else raise 'You need to set up notification_url'
       end
     end
 

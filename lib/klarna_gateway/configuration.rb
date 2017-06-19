@@ -17,6 +17,7 @@ module KlarnaGateway
 
   class Configuration
     attr_accessor :confirmation_url
+    attr_accessor :notification_url
   end
 
   class ConfigurationMissing < StandardError; end
