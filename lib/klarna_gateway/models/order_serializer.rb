@@ -108,7 +108,8 @@ module KlarnaGateway
         # address_update: "string",
         # country_change: "string",
         confirmation: confirmation_url,
-        notification: notification_url
+        # We don't want to handle Pending orders so we don't submit notification_url
+        # notification: notification_url,
       } if store.present?
     end
 
