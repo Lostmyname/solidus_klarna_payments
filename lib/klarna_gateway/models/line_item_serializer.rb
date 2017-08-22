@@ -53,20 +53,21 @@ module KlarnaGateway
     end
 
     def image_url
-      image = line_item.variant.images.first
-      return unless image.present?
-      host = ActionController::Base.asset_host || Spree::Store.first!.url
-      begin
-        scheme = "http://" unless host.to_s.match(/^https?:\/\//)
-        uri = URI::parse("#{scheme}#{host}#{image.attachment.url}")
-      rescue URI::InvalidURIError => e
-        return nil
+      configured_url = KlarnaGateway.configuration.line_item_image_url
+      case configured_url
+      when String then configured_url
+      when Proc then configured_url.call(@line_item)
+      else raise 'You need to set up line_item_image_url'
       end
-      uri.to_s
     end
 
     def product_url
-      Spree::Core::Engine.routes.url_helpers.product_url(line_item.variant, host: Spree::Store.default.url.to_s.chop)
+      configured_url = KlarnaGateway.configuration.product_url
+      case configured_url
+      when String then configured_url
+      when Proc then configured_url.call(@line_item)
+      else raise 'You need to set up product_url'
+      end
     end
 
     def strategy_for_region(region)
