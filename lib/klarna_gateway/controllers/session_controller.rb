@@ -21,9 +21,9 @@ module KlarnaGateway
         render json: {
           error: "Couldn't create token for user"
         }, status: 422
+      else
+        render json: {token: current_order.reload.klarna_client_token}
       end
-
-      render json: {token: current_order.reload.klarna_client_token}
     end
 
     def show
