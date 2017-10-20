@@ -21,7 +21,7 @@ module KlarnaGateway
     end
 
     def to_klarna(country = :us)
-      KlarnaGateway::OrderSerializer.new(self.reload, country)
+      KlarnaGateway::OrderSerializer.new(self, country)
     end
 
     def authorized_klarna_payments
