@@ -21,6 +21,21 @@ require 'spree/testing_support/controller_requests'
 require 'factories/klarna_payment_factory'
 require 'support/klarna_api_helper'
 
+KlarnaGateway.configure do |config|
+  config.line_item_image_url = ->(line_item) do
+    "test_image/#{line_item.product.sku}"
+  end
+  config.product_url = ->(line_item) do
+    "test_product-url/#{line_item.product.sku}"
+  end
+  config.notification_url = ->(store) do
+    "test-notificaiton-url/#{store.name}"
+  end
+  config.confirmation_url = ->(store, order) do
+    "test-confirmation-url/#{store.name}/#{order.name}"
+  end
+end
+
 RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
