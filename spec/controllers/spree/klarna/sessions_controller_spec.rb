@@ -6,8 +6,8 @@ describe Spree::Klarna::SessionsController do
     let!(:payment_method) { Spree::Gateway::KlarnaCredit.create(name: 'Klarna Credit') }
 
     before do
-      payment_method.preferred_api_key = ENV['KLARNA_API_KEY']
-      payment_method.preferred_api_secret = ENV['KLARNA_API_SECRET']
+      payment_method.preferred_api_key = ENV['KLARNA_API_KEY'] || "test"
+      payment_method.preferred_api_secret = ENV['KLARNA_API_SECRET'] || "test"
       payment_method.preferred_country = "us"
       payment_method.save!
       allow(controller).to receive(:current_order).and_return(order)
