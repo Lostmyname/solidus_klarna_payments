@@ -1,4 +1,4 @@
-class AddFailureData < ActiveRecord::Migration
+class AddFailureData < ActiveRecord::Migration[5.0]
   def change
     add_column :spree_klarna_credit_payments, :response_body, :text
     add_column :spree_klarna_credit_payments, :error_code, :string
