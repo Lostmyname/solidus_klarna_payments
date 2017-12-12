@@ -45,5 +45,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "solidus_core", ">= 1.3.0.a", "< 3"
   spec.add_dependency "solidus_frontend", ">= 1.3.0.a", "< 3"
   spec.add_dependency "solidus_backend", ">= 1.3.0.a", "< 3"
+
+  spec.add_dependency "klarna_client", ">= 0.9.1"
   spec.add_dependency "activemerchant"
 end
