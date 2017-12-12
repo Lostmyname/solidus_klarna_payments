@@ -8,8 +8,7 @@ describe KlarnaGateway::DiscountItemSerializer do
   let(:serialized) { serializer.to_hash }
 
   before do
-    order.update_totals
-    order.persist_totals
+    order.update!
   end
 
   context "on the whole order" do

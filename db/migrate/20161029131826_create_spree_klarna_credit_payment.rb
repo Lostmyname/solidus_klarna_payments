@@ -1,4 +1,4 @@
-class CreateSpreeKlarnaCreditPayment < ActiveRecord::Migration
+class CreateSpreeKlarnaCreditPayment < ActiveRecord::Migration[5.0]
   def change
     create_table :spree_klarna_credit_payments do |t|
       t.references :spree_order

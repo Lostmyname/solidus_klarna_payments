@@ -1,4 +1,4 @@
-class AddKlarnaSessionToOrder < ActiveRecord::Migration
+class AddKlarnaSessionToOrder < ActiveRecord::Migration[5.0]
   def change
     add_column :spree_orders, :klarna_session_id, :text
     add_column :spree_orders, :klarna_client_token, :string

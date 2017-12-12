@@ -1,4 +1,4 @@
-class AddKlarnaInfoToKlarnaPayment < ActiveRecord::Migration
+class AddKlarnaInfoToKlarnaPayment < ActiveRecord::Migration[5.0]
   def change
     add_column :spree_klarna_credit_payments, :status, :string
     add_column :spree_klarna_credit_payments, :purchase_currency, :string
