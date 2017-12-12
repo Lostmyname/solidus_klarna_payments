@@ -13,8 +13,8 @@ module KlarnaGateway
         # send the name and the promo code
         name: name.presence || "Discount",
         reference: "Discount",
-        total_amount: (@order.promo_total * 100).to_i,
-        unit_price: (@order.promo_total * 100).to_i,
+        total_amount: (@order.promo_total * 100 + @order.total_applicable_store_credit * 100).to_i,
+        unit_price: (@order.promo_total * 100 + @order.total_applicable_store_credit * 100).to_i,
         tax_rate: 0,
         total_tax_amount: 0
       }
