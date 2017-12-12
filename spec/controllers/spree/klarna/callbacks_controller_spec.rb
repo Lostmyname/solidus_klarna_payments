@@ -13,14 +13,14 @@ describe Spree::Klarna::CallbacksController do
 
       it "accepts the payment" do
         expect {
-          spree_post :notification, params
+          post :notification, params: params
         }.to change{payment_source.reload.accepted?}.from(false).to(true)
         expect(response.body).to eq("ok")
       end
 
       it "logs the call" do
         expect {
-          spree_post :notification, params
+          post :notification, params: params
         }.to change{payment.log_entries.count}.by(1)
       end
     end
@@ -30,14 +30,14 @@ describe Spree::Klarna::CallbacksController do
 
       it "rejects the payment" do
         expect {
-          spree_post :notification, params
+          post :notification, params: params
         }.to change{payment_source.reload.rejected?}.from(false).to(true)
         expect(response.body).to eq("ok")
       end
 
       it "logs the call" do
         expect {
-          spree_post :notification, params
+          post :notification, params: params
         }.to change{payment.log_entries.count}.by(1)
       end
     end
@@ -47,17 +47,16 @@ describe Spree::Klarna::CallbacksController do
 
       it "does not update the payment" do
         expect {
-          spree_post :notification, params
+          post :notification, params: params
         }.to_not change{payment_source.reload.fraud_status}
         expect(response.body).to eq("ok")
       end
 
       it "still logs the call" do
         expect {
-          spree_post :notification, params
+          post :notification, params: params
         }.to change{payment.log_entries.count}.by(1)
       end
     end
   end
 end
-
