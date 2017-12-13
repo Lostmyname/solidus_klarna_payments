@@ -16,7 +16,7 @@ module KlarnaGateway
             result[:order_lines] << tax_line(order)
           end
 
-          if order.promo_total < 0
+          if order.promo_total < 0 || order.total_applicable_store_credit > 0
             result[:order_lines] << KlarnaGateway::DiscountItemSerializer.new(order).to_hash
           end
 

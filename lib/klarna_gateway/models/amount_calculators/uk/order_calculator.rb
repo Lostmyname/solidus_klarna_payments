@@ -14,7 +14,7 @@ module KlarnaGateway
         result.merge!({
           order_amount: order.display_total.cents
         })
-        if order.promo_total < 0
+        if order.promo_total < 0 || order.total_applicable_store_credit > 0
           result[:order_lines] << KlarnaGateway::DiscountItemSerializer.new(order).to_hash
         end
         if skip_personal_data
@@ -40,4 +40,3 @@ module KlarnaGateway
     end
   end
 end
-
