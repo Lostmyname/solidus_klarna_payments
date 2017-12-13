@@ -1,6 +1,7 @@
 module KlarnaGateway
   module SessionController
     def create
+      binding.pry
       if current_order.klarna_session_expired?
         klarna_payment_method.provider.create_session(klarna_order(skip_personal_data: true).to_hash).tap do |response|
           current_order.update_klarna_session(

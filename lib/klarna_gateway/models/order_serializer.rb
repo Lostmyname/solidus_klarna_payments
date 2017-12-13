@@ -40,7 +40,7 @@ module KlarnaGateway
         purchase_currency: order.currency,
         locale: strategy.locale(region),
         # amount with taxes and adjustments
-        order_amount: order.display_total.cents,
+        order_amount: (order.order_total_after_store_credit * 100).to_i,
         billing_address: billing_address,
         shipping_address: shipping_address,
         order_lines: order_lines,
