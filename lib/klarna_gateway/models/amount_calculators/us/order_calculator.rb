@@ -8,7 +8,7 @@ module KlarnaGateway
         def adjust_with(order)
           result = yield
           result.merge!({
-            order_amount: order.display_total.cents,
+            order_amount: (order.order_total_after_store_credit * 100).to_i,
             order_tax_amount: order.display_tax_total.cents
           })
 

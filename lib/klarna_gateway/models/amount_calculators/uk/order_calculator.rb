@@ -12,7 +12,7 @@ module KlarnaGateway
       def adjust_with(order)
         result = yield
         result.merge!({
-          order_amount: order.display_total.cents
+          order_amount: (order.order_total_after_store_credit * 100).to_i
         })
         if order.promo_total < 0 || order.total_applicable_store_credit > 0
           result[:order_lines] << KlarnaGateway::DiscountItemSerializer.new(order).to_hash
