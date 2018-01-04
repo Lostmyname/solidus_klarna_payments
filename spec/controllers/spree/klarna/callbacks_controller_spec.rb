@@ -3,8 +3,9 @@ require "spec_helper"
 describe Spree::Klarna::CallbacksController do
   describe "#notification" do
     let(:order) { create(:order_with_line_items, state: "complete") }
-    let(:payment_source) { Spree::KlarnaCreditPayment.create(order_id: order_id, spree_order_id: order.id, fraud_status: "PENDING") }
-    let!(:payment) { Spree::Payment.create(source: payment_source, order: order) }
+    let(:payment_source) { Spree::KlarnaCreditPayment.create(order_id: order_id, spree_order_id: order.id, fraud_status: "PENDING", payment_method: payment_method) }
+    let!(:payment) { Spree::Payment.create!(source: payment_source, order: order, payment_method: payment_method) }
+    let(:payment_method) { create(:klarna_credit_payment_method) }
     let(:order_id) { "MY_ORDER_ID" }
     let(:params) { {order_id: payment_source.order_id, event_type: event_type} }
 
