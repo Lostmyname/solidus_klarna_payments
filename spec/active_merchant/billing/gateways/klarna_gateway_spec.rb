@@ -14,7 +14,7 @@ module ActiveMerchant
           allow(api_client).to receive(:get).with(any_args).and_return(klarna_order_response)
           expect(Klarna).to receive(:client).twice.with(any_args).and_return(api_client)
 
-          payment.payment_method.provider.authorize(10, payment.source, options).tap do |response|
+          payment.payment_method.gateway.authorize(10, payment.source, options).tap do |response|
             expect(response).to be_a(ActiveMerchant::Billing::Response)
             expect(payment.source).to be_accepted
             expect(payment.source).to be_authorized
@@ -27,7 +27,7 @@ module ActiveMerchant
           expect(api_client).to_not receive(:get).with(any_args)
           expect(Klarna).to receive(:client).once.with(any_args).and_return(api_client)
 
-          payment.payment_method.provider.authorize(10, payment.source, options).tap do |response|
+          payment.payment_method.gateway.authorize(10, payment.source, options).tap do |response|
             expect(response).to be_a(ActiveMerchant::Billing::Response)
             expect(payment.source).to be_error
             expect(payment.source).to_not be_authorized
@@ -43,7 +43,7 @@ module ActiveMerchant
           allow(api_client).to receive(:get).with(any_args).and_return(klarna_cancelled_response)
           expect(Klarna).to receive(:client).twice.with(any_args).and_return(api_client)
 
-          payment.payment_method.provider.cancel(payment.source.order_id).tap do |response|
+          payment.payment_method.gateway.cancel(payment.source.order_id).tap do |response|
             expect(response).to be_a(ActiveMerchant::Billing::Response)
             payment.source.reload
             expect(payment.source).to be_cancelled
@@ -59,7 +59,7 @@ module ActiveMerchant
           allow(api_client).to receive(:get).with(any_args).and_return(klarna_captured_response)
           expect(Klarna).to receive(:client).twice.with(any_args).and_return(api_client)
 
-          payment.payment_method.provider.capture(10, payment.source.order_id, options).tap do |response|
+          payment.payment_method.gateway.capture(10, payment.source.order_id, options).tap do |response|
             expect(response).to be_a(ActiveMerchant::Billing::Response)
             payment.source.reload
             expect(payment.source).to be_captured
@@ -71,9 +71,9 @@ module ActiveMerchant
       # purchase(amount, payment_source, options={})
       context "On purchase" do
         it "calls to authorize and capture" do
-          expect(payment.payment_method.provider).to receive(:authorize).and_return(double('Response', success?: true))
-          expect(payment.payment_method.provider).to receive(:capture).and_return({})
-          payment.payment_method.provider.purchase(10, payment.source, options).tap do |response|
+          expect(payment.payment_method.gateway).to receive(:authorize).and_return(double('Response', success?: true))
+          expect(payment.payment_method.gateway).to receive(:capture).and_return({})
+          payment.payment_method.gateway.purchase(10, payment.source, options).tap do |response|
             expect(response).to eq(response)
           end
         end
@@ -87,7 +87,7 @@ module ActiveMerchant
           expect(Klarna).to receive(:client).twice.with(any_args).and_return(api_client)
           expect(payment.source).to_not be_captured
 
-          payment.payment_method.provider.refund(10, payment.source.order_id, options).tap do |response|
+          payment.payment_method.gateway.refund(10, payment.source.order_id, options).tap do |response|
             expect(response).to be_a(ActiveMerchant::Billing::Response)
             payment.source.reload
             expect(payment.source).to be_captured

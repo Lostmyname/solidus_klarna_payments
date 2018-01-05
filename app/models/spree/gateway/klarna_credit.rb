@@ -1,6 +1,6 @@
 module Spree
   class Gateway
-    class KlarnaCredit < Gateway
+    class KlarnaCredit < PaymentMethod
       preference :api_key, :string
       preference :api_secret, :string
       preference :country, :string, default: 'us'
@@ -24,7 +24,7 @@ module Spree
         super - [:server]
       end
 
-      def provider_class
+      def gateway_class
         ActiveMerchant::Billing::KlarnaGateway
       end
 
@@ -46,9 +46,9 @@ module Spree
 
       def cancel(order_id)
         if source(order_id).fully_captured?
-          provider.refund(payment_amount(order_id), order_id)
+          gateway.refund(payment_amount(order_id), order_id)
         else
-          provider.cancel(order_id)
+          gateway.cancel(order_id)
         end
       end
 
@@ -68,7 +68,7 @@ module Spree
         order = spree_order(options)
         serialized_order = ::KlarnaGateway::OrderSerializer.new(order, options[:country]).to_hash
         klarna_options = {shipping_info: serialized_order[:shipping_info]}
-        provider.capture(amount, order_id, options.merge(klarna_options))
+        gateway.capture(amount, order_id, options.merge(klarna_options))
       end
 
       private

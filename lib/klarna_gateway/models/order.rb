@@ -2,6 +2,10 @@ module KlarnaGateway
   module Order
     KLARNA_SESSION_LIFETIME = 48.hours
 
+    def self.included(base)
+      base.after_save :update_klarna_shipments
+    end
+
     def update_klarna_session(session_id: nil, client_token: nil)
       self.update_attributes(
         klarna_session_id: session_id,
@@ -47,9 +51,9 @@ module KlarnaGateway
     end
 
     def update_klarna_shipments
-      return unless shipment_state_changed? && shipment_state == "shipped"
+      return unless saved_change_to_shipment_state? && shipment_state == "shipped"
       captured_klarna_payments.each do |payment|
-        payment.payment_method.provider.shipping_info(
+        payment.payment_method.gateway.shipping_info(
           payment.source.order_id,
           payment.source.capture_id,
           {
