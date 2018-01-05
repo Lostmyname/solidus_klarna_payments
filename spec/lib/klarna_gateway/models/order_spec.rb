@@ -1,6 +1,10 @@
 require 'spec_helper'
 
+# TODO: Use an actual Spree::Order
 class Order
+  def self.after_save(*args)
+  end
+
   include KlarnaGateway::Order
   attr_accessor :klarna_session_id, :klarna_client_token, :klarna_session_expires_at
 
