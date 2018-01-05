@@ -1,6 +1,6 @@
 module Spree
   class Gateway
-    class KlarnaCredit < Gateway
+    class KlarnaCredit < PaymentMethod
       preference :api_key, :string
       preference :api_secret, :string
       preference :country, :string, default: 'us'
