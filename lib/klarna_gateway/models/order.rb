@@ -53,7 +53,7 @@ module KlarnaGateway
     def update_klarna_shipments
       return unless saved_change_to_shipment_state? && shipment_state == "shipped"
       captured_klarna_payments.each do |payment|
-        payment.payment_method.provider.shipping_info(
+        payment.payment_method.gateway.shipping_info(
           payment.source.order_id,
           payment.source.capture_id,
           {

@@ -2,14 +2,14 @@ module KlarnaGateway
   module SessionController
     def create
       if current_order.klarna_session_expired?
-        klarna_payment_method.provider.create_session(klarna_order(skip_personal_data: true).to_hash).tap do |response|
+        klarna_payment_method.gateway.create_session(klarna_order(skip_personal_data: true).to_hash).tap do |response|
           current_order.update_klarna_session(
             session_id: response.session_id,
             client_token: response.client_token
             ) if response.success?
         end
       else
-        klarna_payment_method.provider.update_session(
+        klarna_payment_method.gateway.update_session(
           current_order.klarna_session_id,
           klarna_order(skip_personal_data: true).to_hash
         ).tap do |response|
