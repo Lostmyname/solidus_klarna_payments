@@ -45,7 +45,7 @@ module KlarnaGateway
     end
 
     def total_tax_amount
-      total_amount - line_item.display_pre_tax_amount.cents
+      total_amount - line_item.display_total_excluding_vat.cents
     end
 
     def unit_price
